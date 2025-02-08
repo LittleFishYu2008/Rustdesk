@@ -1303,6 +1303,7 @@ if exist \"{tmp_path}\\{app_name} Tray.lnk\" del /f /q \"{tmp_path}\\{app_name} 
 // ")
 //     };
 
+//{tray_shortcuts} has been removed from cmds
     let cmds = format!(
         "
 {uninstall_str}
@@ -1325,7 +1326,6 @@ reg add {subkey} /f /v EstimatedSize /t REG_DWORD /d {size}
 reg add {subkey} /f /v WindowsInstaller /t REG_DWORD /d 0
 cscript \"{mk_shortcut}\"
 cscript \"{uninstall_shortcut}\"
-{tray_shortcuts}
 {shortcuts}
 copy /Y \"{tmp_path}\\Uninstall {app_name}.lnk\" \"{path}\\\"
 {dels}
@@ -2246,11 +2246,11 @@ pub fn install_service() -> bool {
     Config::set_option("stop-service".into(), "".into());
     crate::ipc::EXIT_RECV_CLOSE.store(false, Ordering::Relaxed);
     //if exist \"{tray_shortcut}\" del /f /q \"{tray_shortcut}\" has been removed from cmds
+    //cscript \"{tray_shortcut}\" has been removed from cmds
     let cmds = format!(
         "
 chcp 65001
 taskkill /F /IM {app_name}.exe{filter}
-cscript \"{tray_shortcut}\"
 copy /Y \"{tmp_path}\\{app_name} Tray.lnk\" \"%PROGRAMDATA%\\Microsoft\\Windows\\Start Menu\\Programs\\Startup\\\"
 {import_config}
 {create_service}
