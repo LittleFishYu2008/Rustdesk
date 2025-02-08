@@ -389,7 +389,7 @@ jobs:
           files: |
             ./SignOutput/rustdesk-*.exe
 
-  build-for-macOS-arm64-selfhost:
+  # build-for-macOS-arm64-selfhost:
     # use build-for-macOS instead
     if: false
     runs-on: [self-hosted, macOS, ARM64]
@@ -463,7 +463,7 @@ jobs:
           files: |
             rustdesk*-aarch64.dmg
 
-  build-rustdesk-ios:
+  # build-rustdesk-ios:
     if: ${{ inputs.upload-artifact }}
     name: build rustdesk ios ipa
     runs-on: ${{ matrix.job.os }}
@@ -582,65 +582,65 @@ jobs:
       #     files: |
       #       flutter/build/ios/ipa/*.ipa
 
-  build-rustdesk-ios-selfhost:
-    #if: ${{ inputs.upload-artifact }}
-    if: false
-    runs-on: [self-hosted, macOS, ARM64]
-    needs: [generate-bridge]
-    strategy:
-      fail-fast: false
-    steps:
-      - name: Export GitHub Actions cache environment variables
-        uses: actions/github-script@v6
-        with:
-          script: |
-            core.exportVariable('ACTIONS_CACHE_URL', process.env.ACTIONS_CACHE_URL || '');
-            core.exportVariable('ACTIONS_RUNTIME_TOKEN', process.env.ACTIONS_RUNTIME_TOKEN || '');
+  # build-rustdesk-ios-selfhost:
+  #   #if: ${{ inputs.upload-artifact }}
+  #   if: false
+  #   runs-on: [self-hosted, macOS, ARM64]
+  #   needs: [generate-bridge]
+  #   strategy:
+  #     fail-fast: false
+  #   steps:
+  #     - name: Export GitHub Actions cache environment variables
+  #       uses: actions/github-script@v6
+  #       with:
+  #         script: |
+  #           core.exportVariable('ACTIONS_CACHE_URL', process.env.ACTIONS_CACHE_URL || '');
+  #           core.exportVariable('ACTIONS_RUNTIME_TOKEN', process.env.ACTIONS_RUNTIME_TOKEN || '');
 
-      - name: Checkout source code
-        uses: actions/checkout@v4
-        with:
-          submodules: recursive
+  #     - name: Checkout source code
+  #       uses: actions/checkout@v4
+  #       with:
+  #         submodules: recursive
 
-      # $VCPKG_ROOT/vcpkg install --triplet arm64-ios --x-install-root="$VCPKG_ROOT/installed"
+  #     # $VCPKG_ROOT/vcpkg install --triplet arm64-ios --x-install-root="$VCPKG_ROOT/installed"
 
-      - name: Restore bridge files
-        uses: actions/download-artifact@master
-        with:
-          name: bridge-artifact
-          path: ./
+  #     - name: Restore bridge files
+  #       uses: actions/download-artifact@master
+  #       with:
+  #         name: bridge-artifact
+  #         path: ./
 
-      - name: Build rustdesk lib
-        run: |
-          cargo build --features flutter,hwcodec --release --target aarch64-apple-ios --lib
+  #     - name: Build rustdesk lib
+  #       run: |
+  #         cargo build --features flutter,hwcodec --release --target aarch64-apple-ios --lib
 
-      - name: Build rustdesk
-        # ios sdk not installed on this machine, I will install it later after I am back home
-        if: false
-        shell: bash
-        run: |
-          pushd flutter
-          # flutter build ipa --release --obfuscate --split-debug-info=./split-debug-info --no-codesign
-          # for easy debugging
-          flutter build ipa --release --no-codesign
+  #     - name: Build rustdesk
+  #       # ios sdk not installed on this machine, I will install it later after I am back home
+  #       if: false
+  #       shell: bash
+  #       run: |
+  #         pushd flutter
+  #         # flutter build ipa --release --obfuscate --split-debug-info=./split-debug-info --no-codesign
+  #         # for easy debugging
+  #         flutter build ipa --release --no-codesign
 
-      # - name: Upload Artifacts
-      #   # if: env.ANDROID_SIGNING_KEY != null && env.UPLOAD_ARTIFACT == 'true'
-      #   uses: actions/upload-artifact@master
-      #   with:
-      #     name: rustdesk-${{ env.VERSION }}-${{ matrix.job.arch }}.apk
-      #     path: flutter/build/ios/ipa/*.ipa
+  #     # - name: Upload Artifacts
+  #     #   # if: env.ANDROID_SIGNING_KEY != null && env.UPLOAD_ARTIFACT == 'true'
+  #     #   uses: actions/upload-artifact@master
+  #     #   with:
+  #     #     name: rustdesk-${{ env.VERSION }}-${{ matrix.job.arch }}.apk
+  #     #     path: flutter/build/ios/ipa/*.ipa
 
-      # - name: Publish ipa package
-      #   # if: env.ANDROID_SIGNING_KEY != null && env.UPLOAD_ARTIFACT == 'true'
-      #   uses: softprops/action-gh-release@v1
-      #   with:
-      #     prerelease: true
-      #     tag_name: ${{ env.TAG_NAME }}
-      #     files: |
-      #       flutter/build/ios/ipa/*.ipa
+  #     # - name: Publish ipa package
+  #     #   # if: env.ANDROID_SIGNING_KEY != null && env.UPLOAD_ARTIFACT == 'true'
+  #     #   uses: softprops/action-gh-release@v1
+  #     #   with:
+  #     #     prerelease: true
+  #     #     tag_name: ${{ env.TAG_NAME }}
+  #     #     files: |
+  #     #       flutter/build/ios/ipa/*.ipa
 
-  build-for-macOS:
+  # build-for-macOS:
     name: ${{ matrix.job.target }}
     runs-on: ${{ matrix.job.os }}
     needs: [generate-bridge]
@@ -849,22 +849,22 @@ jobs:
 
   publish_unsigned:
     needs:
-      - build-for-macOS
+      # - build-for-macOS
       - build-for-windows-flutter
     runs-on: ubuntu-latest
     if: ${{ inputs.upload-artifact }}
     steps:
-      - name: Download artifacts
-        uses: actions/download-artifact@master
-        with:
-          name: rustdesk-unsigned-macos-x86_64
-          path: ./
+      # - name: Download artifacts
+      #   uses: actions/download-artifact@master
+      #   with:
+      #     name: rustdesk-unsigned-macos-x86_64
+      #     path: ./
 
-      - name: Download Artifacts
-        uses: actions/download-artifact@master
-        with:
-          name: rustdesk-unsigned-macos-aarch64
-          path: ./
+      # - name: Download Artifacts
+      #   uses: actions/download-artifact@master
+      #   with:
+      #     name: rustdesk-unsigned-macos-aarch64
+      #     path: ./
 
       - name: Download Artifacts
         uses: actions/download-artifact@master
@@ -883,7 +883,7 @@ jobs:
           tag_name: ${{ env.TAG_NAME }}
           files: rustdesk-${{ env.VERSION }}-unsigned.tar.gz
 
-  build-rustdesk-android:
+  # build-rustdesk-android:
     needs: [generate-bridge]
     name: build rustdesk android apk ${{ matrix.job.target }}
     runs-on: ${{ matrix.job.os }}
@@ -1172,7 +1172,7 @@ jobs:
           files: |
             signed-apk/rustdesk-${{ env.VERSION }}-${{ matrix.job.arch }}.apk
 
-  build-rustdesk-android-universal:
+  # build-rustdesk-android-universal:
     needs: [build-rustdesk-android]
     name: build rustdesk android universal apk
     if: ${{ inputs.upload-artifact }}
@@ -1353,7 +1353,7 @@ jobs:
           files: |
             signed-apk/rustdesk-${{ env.VERSION }}-universal${{ env.suffix }}.apk
 
-  build-rustdesk-linux:
+  # build-rustdesk-linux:
     needs: [generate-bridge]
     name: build rustdesk linux ${{ matrix.job.target }}
     runs-on: ${{ matrix.job.on }}
@@ -1689,7 +1689,7 @@ jobs:
           files: |
             res/rustdesk-${{ env.VERSION }}*.zst
 
-  build-rustdesk-linux-sciter:
+  # build-rustdesk-linux-sciter:
     if: ${{ inputs.upload-artifact }}
     runs-on: ${{ matrix.job.on }}
     name: build-rustdesk-linux-sciter ${{ matrix.job.target }}
@@ -1906,7 +1906,7 @@ jobs:
           name: rustdesk-${{ env.VERSION }}-${{ matrix.job.arch }}-sciter.deb
           path: rustdesk-${{ env.VERSION }}-${{ matrix.job.arch }}-sciter.deb
 
-  build-appimage:
+  # build-appimage:
     name: Build appimage ${{ matrix.job.target }}
     needs: [build-rustdesk-linux]
     runs-on: ubuntu-20.04
@@ -1958,7 +1958,7 @@ jobs:
           files: |
             ./appimage/rustdesk-${{ env.VERSION }}-*.AppImage
 
-  build-flatpak:
+  # build-flatpak:
     name: Build flatpak ${{ matrix.job.target }}${{ matrix.job.suffix }}
     needs:
       - build-rustdesk-linux
@@ -2042,7 +2042,7 @@ jobs:
           files: |
             flatpak/rustdesk-${{ env.VERSION }}-${{ matrix.job.arch }}${{ matrix.job.suffix }}.flatpak
 
-  build-rustdesk-web:
+  # build-rustdesk-web:
     if: False
     name: build-rustdesk-web
     runs-on: ubuntu-20.04
