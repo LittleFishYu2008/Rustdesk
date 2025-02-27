@@ -581,8 +581,8 @@ class ServerModel with ChangeNotifier {
         key: client.id.toString(),
         label: client.name,
         closable: false,
-        onTap: () {},
-        //page: desktop.buildConnectionCard(client)));
+        //page: desktop.buildConnectionCard(client),
+        onTap: () {},));
     Future.delayed(Duration.zero, () async {
       if (!hideCm) windowOnTop(null);
     });
