@@ -13,7 +13,7 @@ import 'package:window_manager/window_manager.dart';
 
 import '../common.dart';
 import '../common/formatter/id_formatter.dart';
-import '../desktop/pages/server_page.dart' as desktop;
+//import '../desktop/pages/server_page.dart' as desktop;
 import '../desktop/widgets/tabbar_widget.dart';
 import '../mobile/pages/server_page.dart';
 import 'model.dart';
@@ -582,7 +582,7 @@ class ServerModel with ChangeNotifier {
         label: client.name,
         closable: false,
         onTap: () {},
-        page: desktop.buildConnectionCard(client)));
+        //page: desktop.buildConnectionCard(client)));
     Future.delayed(Duration.zero, () async {
       if (!hideCm) windowOnTop(null);
     });
