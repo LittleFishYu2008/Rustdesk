@@ -521,7 +521,7 @@ class ServerModel with ChangeNotifier {
       try {
         final client = Client.fromJson(clientJson);
         _clients.add(client);
-        _addTab(client);
+        //_addTab(client);
       } catch (e) {
         debugPrint("Failed to decode clientJson '$clientJson', error $e");
       }
@@ -556,7 +556,7 @@ class ServerModel with ChangeNotifier {
         }
         _clients.add(client);
       }
-      _addTab(client);
+      //_addTab(client);
       // remove disconnected
       final index_disconnected = _clients
           .indexWhere((c) => c.disconnected && c.peerId == client.peerId);
