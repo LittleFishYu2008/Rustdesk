@@ -13,7 +13,7 @@ import 'package:window_manager/window_manager.dart';
 
 import '../common.dart';
 import '../common/formatter/id_formatter.dart';
-//import '../desktop/pages/server_page.dart' as desktop;
+import '../desktop/pages/server_page.dart' as desktop;
 import '../desktop/widgets/tabbar_widget.dart';
 import '../mobile/pages/server_page.dart';
 import 'model.dart';
@@ -576,26 +576,26 @@ class ServerModel with ChangeNotifier {
     }
   }
 
-  void _addTab(Client client) {
-    tabController.add(TabInfo(
-        key: client.id.toString(),
-        label: client.name,
-        closable: false,
-        //page: desktop.buildConnectionCard(client),
-        onTap: () {},));
-    Future.delayed(Duration.zero, () async {
-      if (!hideCm) windowOnTop(null);
-    });
-    // Only do the hidden task when on Desktop.
-    if (client.authorized && isDesktop) {
-      cmHiddenTimer = Timer(const Duration(seconds: 3), () {
-        if (!hideCm) windowManager.minimize();
-        cmHiddenTimer = null;
-      });
-    }
-    parent.target?.chatModel
-        .updateConnIdOfKey(MessageKey(client.peerId, client.id));
-  }
+  // void _addTab(Client client) {
+  //   tabController.add(TabInfo(
+  //       key: client.id.toString(),
+  //       label: client.name,
+  //       closable: false,
+  //       page: desktop.buildConnectionCard(client),
+  //       onTap: () {},));
+  //   Future.delayed(Duration.zero, () async {
+  //     if (!hideCm) windowOnTop(null);
+  //   });
+  //   // Only do the hidden task when on Desktop.
+  //   if (client.authorized && isDesktop) {
+  //     cmHiddenTimer = Timer(const Duration(seconds: 3), () {
+  //       if (!hideCm) windowManager.minimize();
+  //       cmHiddenTimer = null;
+  //     });
+  //   }
+  //   parent.target?.chatModel
+  //       .updateConnIdOfKey(MessageKey(client.peerId, client.id));
+  // }
 
   void showLoginDialog(Client client) {
     showClientDialog(

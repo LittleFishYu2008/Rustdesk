@@ -9,7 +9,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_hbb/common/widgets/overlay.dart';
 import 'package:flutter_hbb/desktop/pages/desktop_tab_page.dart';
 import 'package:flutter_hbb/desktop/pages/install_page.dart';
-//import 'package:flutter_hbb/desktop/pages/server_page.dart';
+import 'package:flutter_hbb/desktop/pages/server_page.dart';
 import 'package:flutter_hbb/desktop/screen/desktop_file_transfer_screen.dart';
 import 'package:flutter_hbb/desktop/screen/desktop_port_forward_screen.dart';
 import 'package:flutter_hbb/desktop/screen/desktop_remote_screen.dart';
@@ -239,11 +239,11 @@ void runMultiWindow(
 
 void runConnectionManagerScreen() async {
   await initEnv(kAppTypeConnectionManager);
-  _runApp(
-    '',
-    //const DesktopServerPage(),
-    MyTheme.currentThemeMode(),
-  );
+  // _runApp(
+  //   '',
+  //   const DesktopServerPage(),
+  //   MyTheme.currentThemeMode(),
+  // );
   final hide = await bind.cmGetConfig(name: "hide_cm") == 'true';
   gFFI.serverModel.hideCm = hide;
   if (hide) {
